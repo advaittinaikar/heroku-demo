@@ -32,7 +32,7 @@ enable :sessions
 # ----------------------------------------------------------------------
 
 get "/" do
-  401
+  "My Great Application".to_s
 end
 
 
