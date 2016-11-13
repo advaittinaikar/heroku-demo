@@ -31,7 +31,7 @@ enable :sessions
 #     ROUTES, END POINTS AND ACTIONS
 # ----------------------------------------------------------------------
 
-get "/" do
+get '/' do
   "My Great Application".to_s
 end
 
@@ -164,7 +164,7 @@ end
 
 
 error 401 do 
-  "Not allowed!!!"
+  "Why is this happening!!!"
 end
 
 
