@@ -10,16 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161101024543) do
+ActiveRecord::Schema.define(version: 20161119212438) do
 
-  create_table "lists", force: :cascade do |t|
-    t.string "name"
+  create_table "personal_details", force: :cascade do |t|
+    t.string "qualification"
+    t.string "institution"
+    t.string "time_period"
+    t.string "category"
   end
 
-  create_table "tasks", force: :cascade do |t|
-    t.string  "name"
-    t.integer "list_id"
-    t.boolean "is_complete", default: false
+  create_table "schedule", force: :cascade do |t|
+    t.datetime "week"
+    t.integer  "number_of_classes"
+    t.string   "lectures"
+    t.integer  "number_of_assignments"
+    t.string   "assignments"
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.datetime "week"
+    t.integer  "number_of_classes"
+    t.string   "lectures"
+    t.integer  "number_of_assignments"
+    t.string   "assignments"
   end
 
 end

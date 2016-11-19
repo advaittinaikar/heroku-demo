@@ -1,4 +1,5 @@
 require "sinatra"
+require 'rake'
 require 'active_support/all'
 require "active_support/core_ext"
 require 'json'
@@ -9,8 +10,8 @@ require 'httparty'
 require 'builder'
 
 # require models 
-require_relative './models/list'
-require_relative './models/task'
+require_relative './models/PersonalDetail'
+require_relative './models/Schedule'
 
 
 # ----------------------------------------------------------------------
@@ -55,15 +56,15 @@ get '/incoming_sms' do
 
   if body == "where is advait"
 
-    message = "He's in #{user["city"]},#{user["state"]}"
+    message = "He's in #{user["city"]}, #{user["state"]}"
 
-  elsif body == "what is the weather like"
+  elsif body == "what is the weather like there"
 
     message = "It's sunny outside"
 
   elsif body == "show me advait's portfolio"
 
-    message = "It is available on behance. His username is advait.tinaikar."
+    message = "It is available on behance. His username is #{user["username"]}."
 
   elsif body == "college"
 
@@ -95,41 +96,41 @@ get '/incoming_sms' do
 end
 
 
-# get '/tasks', :provides => [:html, :json, :xml] do
+get '/personal-details', :provides => [:html, :json, :xml] do
   
-#   #Task.all.to_json
-#   @tasks = Task.all
-#   #
-#   # respond_to do |f|
-#   #   f.xml { @tasks.to_xml }
-#   #   f.on( 'text/json' ) { @tasks.to_json }
-#   #   f.on( 'text/html' ) { "wooops" }
-#   #   f.on( 'application/json' ) { @tasks.to_json }
-#   #   #f.on('*/*') {  Task.all.map{ |t| t.to_s }.to_s }
-#   #   f.on('*/*') { haml :'tasks/index' }
-#   # end
+  #Task.all.to_json
+  @personal = PersonalDetail.all
+  #
+  # respond_to do |f|
+  #   f.xml { @tasks.to_xml }
+  #   f.on( 'text/json' ) { @tasks.to_json }
+  #   f.on( 'text/html' ) { "wooops" }
+  #   f.on( 'application/json' ) { @tasks.to_json }
+  #   #f.on('*/*') {  Task.all.map{ |t| t.to_s }.to_s }
+  #   f.on('*/*') { haml :'tasks/index' }
+  # end
 
-#   # respond_to do |f|
-#   #     f.xml { @tasks.to_xml }
-#   #     f.on( 'text/json' ) { @tasks.to_json }
-#   #     #f.on( 'text/html' ) { "wooops" }
-#   #     f.on( 'application/json' ) { @tasks.to_json }
-#   #     #f.on('*/*') {  Task.all.map{ |t| t.to_s }.to_s }
-#   #     f.on('*/*') { haml :'tasks/index' }
-#   #
-#   # end
+  # respond_to do |f|
+  #     f.xml { @tasks.to_xml }
+  #     f.on( 'text/json' ) { @tasks.to_json }
+  #     #f.on( 'text/html' ) { "wooops" }
+  #     f.on( 'application/json' ) { @tasks.to_json }
+  #     #f.on('*/*') {  Task.all.map{ |t| t.to_s }.to_s }
+  #     f.on('*/*') { haml :'tasks/index' }
+  #
+  # end
  
-#   @tasks.to_json
-# end
+  @personal.to_json
+end
  
-# get '/tasks/:id' do
-#   Task.where(id: params['id']).first.to_json
-# end
+get '/personal-details/:id' do
+  PersonalDetail.where(id: params['id']).first.to_json
+end
  
-# # curl -X POST -F 'name=test' -F 'list_id=1' http://localhost:9393/tasks
+# # curl -X POST -F 'name=test' -F 'list_id=1' http://localhost:9393/personal-details
  
-# post '/tasks' do
-#   task = Task.new(params)
+# post '/personal-details' do
+#   personal-details = PersonalDetail.new(params)
  
 #   if task.save
 #     task.to_json
@@ -138,10 +139,10 @@ end
 #   end
 # end
  
-# # curl -X PUT -F 'name=updates' -F 'list_id=1' http://localhost:9393/tasks/1
+# # curl -X PUT -F 'name=updates' -F 'list_id=1' http://localhost:9393/personal-details/1
  
-# put '/tasks/:id' do
-#   task = Task.where(id: params['id']).first
+# put '/personal-details/:id' do
+#   task = PersonalDetail.where(id: params['id']).first
  
 #   if task
 #     task.name = params['name'] if params.has_key?('name')
@@ -155,8 +156,8 @@ end
 #   end
 # end
  
-# delete '/tasks/:id' do
-#   task = Task.where(id: params['id'])
+# delete '/personal-details/:id' do
+#   task = PersonalDetail.where(id: params['id'])
  
 #   if task.destroy_all
 #     {success: "ok"}.to_json
@@ -214,25 +215,25 @@ end
 #     halt 500
 #   end
 # end
-# # ----------------------------------------------------------------------
-# #     ERRORS
-# # ----------------------------------------------------------------------
+# ----------------------------------------------------------------------
+#     ERRORS
+# ----------------------------------------------------------------------
 
 
-# error 401 do 
-#   "Why is this happening!!!"
-# end
+error 401 do 
+  "Why is this happening!!!"
+end
 
 
-# # ----------------------------------------------------------------------
-# #   METHODS
-# #   Add any custom methods below
-# # ----------------------------------------------------------------------
+# ----------------------------------------------------------------------
+#   METHODS
+#   Add any custom methods below
+# ----------------------------------------------------------------------
 
-# private
+private
 
-# # for example 
-# def square_of int
-#   int * int
-# end
+# for example 
+def square_of int
+  int * int
+end
 
