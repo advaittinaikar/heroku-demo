@@ -73,9 +73,11 @@ get '/incoming_sms' do
   end
 
   twiml=Twilio::TwiML::Response.new do |resp|
-    resp.Message message
-    unless media.nil?
-      resp.Media media
+    resp.Message do |r|
+      r.Body message
+      unless media.nil?
+        r.Media media
+      end
     end
   end
 
