@@ -5,9 +5,9 @@ require 'json'
 require 'sinatra/activerecord'
 require 'haml'
 require 'twilio-ruby'
-require 'builder'
-require 'twilio-ruby'
 require 'httparty'
+require 'builder'
+
 # require models 
 require_relative './models/list'
 require_relative './models/task'
@@ -33,7 +33,7 @@ end
 enable :sessions
 
 twilio_client = Twilio::REST::Client.new ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_AUTH_TOKEN"]
-behance_client = Behance::Client.new(access_token = ENV['BEHANCE_TOKEN'])
+# behance_client = Behance::Client.new(access_token = ENV['BEHANCE_TOKEN'])
 
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
