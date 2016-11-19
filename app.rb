@@ -57,6 +57,7 @@ get '/incoming_sms' do
     message = "He currently studies at Carnegie Mellon's III."
   else
     message =  "You can know these things: his location, the weather there, his portfoilio details, college, work"
+  end
 
   twiml=Twilio::TwiML::Response.new do |resp|
     resp.Message message
