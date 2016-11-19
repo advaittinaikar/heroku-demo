@@ -45,15 +45,15 @@ get '/incoming_sms' do
 
   sender = params[:From]
   body = params[:Body]
-  body = body.downcase.strip
+  query = body.downcase.strip
 
-  if body == "whereisadvait"
+  if query == "whereisadvait"
     message = "He's in Pittsburgh"
-  elsif body == "whatistheweather"
+  elsif query == "whatistheweather"
     message = "It's sunny outside"
-  elsif body == "showmeadvait'sportfolio"
+  elsif query == "showmeadvait'sportfolio"
     message = "It is available on behance. His username is advait.tinaikar."
-  elsif body == "whereishestudying"
+  elsif query == "whereishestudying"
     message = "He currently studies at Carnegie Mellon's III."
   else
     message =  "You can know these things: his location, the weather there, his portfoilio details, college, work"
