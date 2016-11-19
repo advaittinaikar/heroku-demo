@@ -58,7 +58,6 @@ get '/incoming_sms' do
   elsif body == "where is he studying"
     message = "He currently studies at Carnegie Mellon's III."
   elsif body == "show me his behance profile details"
-    https://api.behance.net/v2/users/matiascorea/projects?client_id=1234567890
     profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar/projects?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
     link = profile.user.url
     message = "Find here the link to his profile: <a href=#{link}></a>"
