@@ -19,14 +19,6 @@ ActiveRecord::Schema.define(version: 20161119220627) do
     t.string "category"
   end
 
-  create_table "schedule", force: :cascade do |t|
-    t.datetime "week"
-    t.integer  "number_of_classes"
-    t.string   "lectures"
-    t.integer  "number_of_assignments"
-    t.string   "assignments"
-  end
-
   create_table "schedules", force: :cascade do |t|
     t.datetime "week"
     t.integer  "number_of_classes"
