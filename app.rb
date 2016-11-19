@@ -68,7 +68,13 @@ get '/incoming_sms' do
 
   elsif body == "where has he studied"
 
-    message = where_studied
+    all_personal_details do |p|
+
+    if p.category == "education"
+      message += "#{p.qualification} at #{p.institution} and"
+    end
+
+    end
 
   elsif body == "how many classes does he have this week"
 
@@ -93,6 +99,7 @@ get '/incoming_sms' do
   elsif body == "show me his behance profile details"
 
     message = behance_profile
+    media = user["images"]["138"]
 
   else
 
@@ -147,7 +154,6 @@ end
 
 def behance_profile
   link = $user["url"]
-  media = $user["images"]["138"]
   message="Here's a link to his behance profile: #{link}"
   return message
 end
