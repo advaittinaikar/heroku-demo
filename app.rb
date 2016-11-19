@@ -100,7 +100,7 @@ get '/incoming_sms' do
 
   else
 
-    message = "You can know these things: his location, the weather there, his portfolio details, college, work."
+    message = "Hi there. You can know these things about Advait: his location, the weather there, his work and education details!"
 
   end
 
