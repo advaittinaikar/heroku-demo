@@ -40,8 +40,8 @@ behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaika
 
 $user=behance_profile["user"]
 
-all_personal_details=PersonalDetail.all
-entire_schedule=Schedule.all
+all_personal_details = PersonalDetail.all.to_json
+entire_schedule=Schedule.all.to_json
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
 # ----------------------------------------------------------------------
