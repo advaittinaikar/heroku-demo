@@ -65,10 +65,11 @@ get '/incoming_sms' do
   elsif body == "show me his behance profile details"
     # profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
     user=behance_profile["user"]
-    link=user["url"]
-    media = user["images"]["138"]
+    link = user["url"]
+    image = user["images"]
+    media = image["138"]
   else
-    message =  "You can know these things: his location, the weather there, his portfolio details, college, work."
+    message = "You can know these things: his location, the weather there, his portfolio details, college, work."
   end
 
   twiml=Twilio::TwiML::Response.new do |resp|
