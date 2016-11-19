@@ -42,7 +42,6 @@ user=behance_profile["user"]
 
 get '/' do
   "My Great Application".to_s
-  user=behance_profile["user"]
   profile_name=user["first_name"]
   # behance_profile.user.url.to_s
 end
@@ -55,22 +54,31 @@ get '/incoming_sms' do
   media=nil
 
   if body == "where is advait"
-    message = "He's in Pittsburgh"
+
+    message = "He's in #{user["city"]},#{user["state"]}"
+
   elsif body == "what is the weather like"
+
     message = "It's sunny outside"
+
   elsif body == "show me advait's portfolio"
+
     message = "It is available on behance. His username is advait.tinaikar."
-  elsif body == "where is he studying"
+
+  elsif body == "college"
+
     message = "He currently studies at Carnegie Mellon's III."
+
   elsif body == "show me his behance profile details"
-    # profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
+
     link = user["url"]
-    # image = user["images"]
-    # media = image["138"]
     media = user["images"]["138"]
     message="Here's a link to his behance profile: #{link}"
+
   else
+
     message = "You can know these things: his location, the weather there, his portfolio details, college, work."
+
   end
 
   twiml=Twilio::TwiML::Response.new do |resp|
