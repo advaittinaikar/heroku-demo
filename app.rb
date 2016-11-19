@@ -52,9 +52,7 @@ get '/incoming_sms' do
   sender = params[:From]
   body = params[:Body]
   body = body.downcase
-
-  # behance_profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
-  # behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar/projects?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
+  media=nil
 
   if body == "where is advait"
     message = "He's in Pittsburgh"
@@ -68,16 +66,18 @@ get '/incoming_sms' do
     # profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
     user=behance_profile["user"]
     link=user["url"]
-    message = "Find here the link to his profile: #{link}"
+    media = user["images"]["138"]
   else
     message =  "You can know these things: his location, the weather there, his portfolio details, college, work."
   end
 
   twiml=Twilio::TwiML::Response.new do |resp|
     resp.Message message
+    unless media.nil?
+    resp.Media media
   end
 
-  content_type 'text/xml'
+  # content_type 'text/xml'
 
   twiml.text
 end
