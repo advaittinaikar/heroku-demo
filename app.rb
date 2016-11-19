@@ -31,7 +31,8 @@ end
 # enable sessions for this project
 enable :sessions
 
-client = Twilio::REST::Client.new ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_AUTH_TOKEN"]
+twilio_client = Twilio::REST::Client.new ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_AUTH_TOKEN"]
+behance_client = Behance::Client.new(access_token = ENV['BEHANCE_TOKEN'])
 
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
@@ -45,16 +46,18 @@ get '/incoming_sms' do
 
   sender = params[:From]
   body = params[:Body]
-  query = body.downcase.strip
+  query = body.downcase
 
-  if query == "whereisadvait"
+  if query == "where is advait"
     message = "He's in Pittsburgh"
-  elsif query == "whatistheweather"
+  elsif query == "what is the weather like"
     message = "It's sunny outside"
-  elsif query == "showmeadvait'sportfolio"
+  elsif query == "show me advait's portfolio"
     message = "It is available on behance. His username is advait.tinaikar."
-  elsif query == "whereishestudying"
+  elsif query == "where is he studying"
     message = "He currently studies at Carnegie Mellon's III."
+  elsif query == "show me his behance profile details"
+    message = behance_client.user("advait-tinaikar").to_json
   else
     message =  "You can know these things: his location, the weather there, his portfoilio details, college, work"
   end
