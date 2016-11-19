@@ -33,7 +33,8 @@ end
 enable :sessions
 
 twilio_client = Twilio::REST::Client.new ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_AUTH_TOKEN"]
-# behance_client = Behance::Client.new(access_token = ENV['BEHANCE_TOKEN'])
+behance_profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
+behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar/projects?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
 
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
@@ -41,6 +42,7 @@ twilio_client = Twilio::REST::Client.new ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_
 
 get '/' do
   "My Great Application".to_s
+  behance_profile.user.url.to_s
 end
 
 get '/incoming_sms' do
@@ -48,6 +50,9 @@ get '/incoming_sms' do
   sender = params[:From]
   body = params[:Body]
   body = body.downcase
+
+  behance_profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
+  behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar/projects?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
 
   if body == "where is advait"
     message = "He's in Pittsburgh"
@@ -58,11 +63,11 @@ get '/incoming_sms' do
   elsif body == "where is he studying"
     message = "He currently studies at Carnegie Mellon's III."
   elsif body == "show me his behance profile details"
-    profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
+    # profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
     link = profile.user.url
     message = "Find here the link to his profile: link"
   else
-    message =  "You can know these things: his location, the weather there, his portfoilio details, college, work"
+    message =  "You can know these things: his location, the weather there, his portfolio details, college, work."
   end
 
   twiml=Twilio::TwiML::Response.new do |resp|
@@ -215,3 +220,4 @@ end
 # def square_of int
 #   int * int
 # end
+
