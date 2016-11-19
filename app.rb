@@ -68,7 +68,7 @@ get '/incoming_sms' do
     # profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
     user=behance_profile["user"]
     link=user["url"]
-    message = "Find here the link to his profile: link"
+    message = "Find here the link to his profile: <a href=#{link}></a>"
   else
     message =  "You can know these things: his location, the weather there, his portfolio details, college, work."
   end
