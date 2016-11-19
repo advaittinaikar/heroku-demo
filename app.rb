@@ -74,7 +74,8 @@ get '/incoming_sms' do
   twiml=Twilio::TwiML::Response.new do |resp|
     resp.Message message
     unless media.nil?
-    resp.Media media
+      resp.Media media
+    end
   end
 
   # content_type 'text/xml'
