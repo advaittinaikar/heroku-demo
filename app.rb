@@ -34,17 +34,21 @@ end
 enable :sessions
 
 twilio_client = Twilio::REST::Client.new ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_AUTH_TOKEN"]
+
 behance_profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
 behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar/projects?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
+
 user=behance_profile["user"]
+
+@all_personal_details=PersonalDetail.all
+@entire_schedule=Schedule.all
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
 # ----------------------------------------------------------------------
 
 get '/' do
   "My Great Application".to_s
-  profile_name=user["first_name"]
-  # behance_profile.user.url.to_s
+  profile_name="#{user["first_name"]}"
 end
 
 get '/incoming_sms' do
@@ -60,21 +64,39 @@ get '/incoming_sms' do
 
   elsif body == "what is the weather like there"
 
-    message = "It's sunny outside"
+    message = "It's damn cold!"
+
+  elsif body == "where has he studied"
+
+    message = "It is available on behance. His username is #{user["username"]}."
+
+  elsif body == "what his educational background"
+
+    message = where_studied
+
+  elsif body == "how many classes does he have this week"
+
+    message = classes_this_week
+
+  elsif body == "how many classes did he have last week"
+
+    message = classes_last_week
+
+  elsif body == "how many assignments does he have this week"
+
+    message = assignments_this_week
+
+  elsif body == "how many assignments did he have this week"
+
+    message = assignments_last_week  
 
   elsif body == "show me advait's portfolio"
 
     message = "It is available on behance. His username is #{user["username"]}."
 
-  elsif body == "college"
-
-    message = "He currently studies at Carnegie Mellon's III."
-
   elsif body == "show me his behance profile details"
 
-    link = user["url"]
-    media = user["images"]["138"]
-    message="Here's a link to his behance profile: #{link}"
+    message = behance_profile
 
   else
 
@@ -125,6 +147,64 @@ end
  
 get '/personal-details/:id' do
   PersonalDetail.where(id: params['id']).first.to_json
+end
+
+def behance_profile
+  link = user["url"]
+  media = user["images"]["138"]
+  message="Here's a link to his behance profile: #{link}"
+  return message
+end
+
+def where_studied
+  message="He has done his "
+
+  all_personal_details do |p|
+
+    if p.category == "education"
+      message += "#{p.qualification} at #{p.institution} and"
+    end
+
+  end
+
+  return message
+end
+
+def classes_this_week
+  message="He has "
+
+  entire_schedule do |e|
+    message += "#{e.number_of_classes} this week. They are #{lectures}."
+    return message
+  end
+end
+
+def classes_last_week
+  message="He had "
+
+  entire_schedule do |e|
+    message += "#{e.number_of_classes} this week. They are #{lectures}."
+  end
+end
+
+def assignments_this_week
+
+  message="He has "
+
+  e=entire_schedule[0]
+  message += "#{e.number_of_assignments} this week. They are #{assignments}."
+  return message
+
+end
+
+def assignments_last_week
+
+  message="He had "
+
+  e=entire_schedule[1]
+  message += "#{e.number_of_assignments} last week. They were #{assignments}."
+  return message
+  
 end
  
 # # curl -X POST -F 'name=test' -F 'list_id=1' http://localhost:9393/personal-details
