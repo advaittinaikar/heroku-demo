@@ -47,8 +47,7 @@ entire_schedule=Schedule.all.to_json
 # ----------------------------------------------------------------------
 
 get '/' do
-  "My Great Application".to_s
-  profile_name="#{user["first_name"]}"
+  "This application has been made by #{user["first_name"]}!"
 end
 
 get '/incoming_sms' do
@@ -68,7 +67,7 @@ get '/incoming_sms' do
 
   elsif body == "where has he studied"
 
-    all_personal_details do |p|
+    all_personal_details.each do |p|
 
     if p.category == "education"
       message += "#{p.qualification} at #{p.institution} and"
