@@ -38,7 +38,7 @@ twilio_client = Twilio::REST::Client.new ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_
 behance_profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
 behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar/projects?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
 
-user=behance_profile["user"]
+@user=behance_profile["user"]
 
 @all_personal_details=PersonalDetail.all
 @entire_schedule=Schedule.all
@@ -146,8 +146,8 @@ get '/personal-details/:id' do
 end
 
 def behance_profile
-  link = user["url"]
-  media = user["images"]["138"]
+  link = @user["url"]
+  media = @user["images"]["138"]
   message="Here's a link to his behance profile: #{link}"
   return message
 end
