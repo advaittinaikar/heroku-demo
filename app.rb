@@ -42,7 +42,9 @@ behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaika
 
 get '/' do
   "My Great Application".to_s
-  behance_profile.user.url.to_s
+  user=behance_profile["user"]
+  profile_name=user["first_name"]
+  # behance_profile.user.url.to_s
 end
 
 get '/incoming_sms' do
@@ -51,8 +53,8 @@ get '/incoming_sms' do
   body = params[:Body]
   body = body.downcase
 
-  behance_profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
-  behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar/projects?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
+  # behance_profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
+  # behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar/projects?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
 
   if body == "where is advait"
     message = "He's in Pittsburgh"
@@ -64,7 +66,8 @@ get '/incoming_sms' do
     message = "He currently studies at Carnegie Mellon's III."
   elsif body == "show me his behance profile details"
     # profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
-    link = profile.user.url
+    user=behance_profile["user"]
+    link=user["url"]
     message = "Find here the link to his profile: link"
   else
     message =  "You can know these things: his location, the weather there, his portfolio details, college, work."
