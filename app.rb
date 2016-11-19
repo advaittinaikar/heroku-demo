@@ -31,7 +31,7 @@ end
 # enable sessions for this project
 enable :sessions
 
-client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_ID'], ENV['TWILIO_AUTH_TOKEN']
+client = Twilio::REST::Client.new ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_AUTH_TOKEN"]
 
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
@@ -43,9 +43,9 @@ end
 
 get '/incoming_sms' do
 
-  sender=params[:From]
-  body=params[:Body]
-  body=body.downcase.strip
+  sender = params[:From]
+  body = params[:Body]
+  body = body.downcase.strip
 
   if body == "whereisadvait"
     message = "He's in Pittsburgh"
