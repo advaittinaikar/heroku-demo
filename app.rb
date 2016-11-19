@@ -8,6 +8,8 @@ require 'builder'
 # require models 
 require_relative './models/list'
 require_relative './models/task'
+
+require 'twilio-ruby'
 # ----------------------------------------------------------------------
 
 # Load environment variables using Dotenv. If a .env file exists, it will
