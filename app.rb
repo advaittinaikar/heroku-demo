@@ -31,12 +31,40 @@ end
 # enable sessions for this project
 enable :sessions
 
+client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_ID'], ENV['TWILIO_AUTH_TOKEN']
+
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
 # ----------------------------------------------------------------------
 
 get '/' do
   "My Great Application".to_s
+end
+
+get '/incoming_sms' do
+
+  sender=params[:From]
+  body=params[:Body]
+  body=body.downcase.strip
+
+  if body == "whereisadvait"
+    message = "He's in Pittsburgh"
+  elsif body == "whatistheweather"
+    message = "It's sunny outside"
+  elsif body == "showmeadvait'sportfolio"
+    message = "It is available on behance. His username is advait.tinaikar."
+  elsif body == "whereishestudying"
+    message = "He currently studies at Carnegie Mellon's III."
+  else
+    message =  "You can know these things: his location, the weather there, his portfoilio details, college, work"
+
+  twiml=Twilio::TwiML::Response.new do |resp|
+    resp.Message message
+  end
+
+  content_type 'text/xml'
+
+  twiml.text
 end
 
 
@@ -109,9 +137,6 @@ delete '/tasks/:id' do
     halt 500
   end
 end
-
-
-
 
 get '/lists' do
   List.all.to_json(include: :tasks)
