@@ -7,7 +7,7 @@ require 'haml'
 require 'twilio-ruby'
 require 'builder'
 require 'twilio-ruby'
-require 'behance'
+require 'httparty'
 # require models 
 require_relative './models/list'
 require_relative './models/task'
@@ -47,18 +47,19 @@ get '/incoming_sms' do
 
   sender = params[:From]
   body = params[:Body]
-  query = body.downcase
+  body = body.downcase
 
-  if query == "where is advait"
+  if body == "where is advait"
     message = "He's in Pittsburgh"
-  elsif query == "what is the weather like"
+  elsif body == "what is the weather like"
     message = "It's sunny outside"
-  elsif query == "show me advait's portfolio"
+  elsif body == "show me advait's portfolio"
     message = "It is available on behance. His username is advait.tinaikar."
-  elsif query == "where is he studying"
+  elsif body == "where is he studying"
     message = "He currently studies at Carnegie Mellon's III."
-  elsif query == "show me his behance profile details"
-    message = behance_client.user("advait-tinaikar").to_json
+  elsif body == "show me his behance profile details"
+    profile = HTTParty.get("http://www.behance.net/v2/users/advait-tinaikar/projects?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
+    message = "Find here the link to his profile: <a href=#{profile.user.url}></a>"
   else
     message =  "You can know these things: his location, the weather there, his portfoilio details, college, work"
   end
