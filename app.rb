@@ -4,12 +4,13 @@ require "active_support/core_ext"
 require 'json'
 require 'sinatra/activerecord'
 require 'haml'
+require 'twilio-ruby'
 require 'builder'
 # require models 
 require_relative './models/list'
 require_relative './models/task'
 
-require 'twilio-ruby'
+
 # ----------------------------------------------------------------------
 
 # Load environment variables using Dotenv. If a .env file exists, it will
