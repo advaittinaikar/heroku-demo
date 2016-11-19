@@ -64,13 +64,9 @@ get '/incoming_sms' do
 
   elsif body == "what is the weather like there"
 
-    message = "It's damn cold!"
+    message = "It's damn cold there!"
 
   elsif body == "where has he studied"
-
-    message = "It is available on behance. His username is #{user["username"]}."
-
-  elsif body == "what his educational background"
 
     message = where_studied
 
