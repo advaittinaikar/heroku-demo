@@ -68,6 +68,7 @@ get '/incoming_sms' do
     link = user["url"]
     image = user["images"]
     media = image["138"]
+    message="Here's a link to his behance profile: #{link}"
   else
     message = "You can know these things: his location, the weather there, his portfolio details, college, work."
   end
