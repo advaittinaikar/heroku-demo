@@ -35,7 +35,7 @@ enable :sessions
 twilio_client = Twilio::REST::Client.new ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_AUTH_TOKEN"]
 behance_profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
 behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar/projects?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
-
+user=behance_profile["user"]
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
 # ----------------------------------------------------------------------
@@ -64,10 +64,10 @@ get '/incoming_sms' do
     message = "He currently studies at Carnegie Mellon's III."
   elsif body == "show me his behance profile details"
     # profile = HTTParty.get("https://api.behance.net/v2/users/advait-tinaikar?client_id=3ck8ZeGDIorykMa8qj4Jo17L89E93zua")
-    user=behance_profile["user"]
     link = user["url"]
-    image = user["images"]
-    media = image["138"]
+    # image = user["images"]
+    # media = image["138"]
+    media = user["images"]["138"]
     message="Here's a link to his behance profile: #{link}"
   else
     message = "You can know these things: his location, the weather there, his portfolio details, college, work."
@@ -81,7 +81,6 @@ get '/incoming_sms' do
       end
     end
   end
-
   # content_type 'text/xml'
 
   twiml.text
