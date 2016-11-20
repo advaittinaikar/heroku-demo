@@ -60,7 +60,7 @@ get '/incoming_sms' do
 
   if body == "where is advait"
 
-    message = "He's in #{user["city"]}, #{user["state"]}"
+    message = "He's in #{user["city"]}, #{user["state"]}."
 
   elsif body == "what is the weather like there"
 
@@ -86,7 +86,7 @@ get '/incoming_sms' do
 
     message = assignments_this_week entire_schedule
 
-  elsif body == "how many assignments did he have this week"
+  elsif body == "how many assignments did he have last week"
 
     message = assignments_last_week entire_schedule
 
@@ -98,7 +98,7 @@ get '/incoming_sms' do
 
   else
 
-    message = "Hi there. You can know these things about Advait: his location, the weather there, his work and education details!"
+    message = "Hi there. I'm Advait's chatbot. You're asking something I don't know. However I do know where he is. I also know where he's studied and worked as well as his schedule."
 
   end
 
@@ -179,9 +179,9 @@ end
 def classes_this_week schedule
   message="He has "
 
-  schedule.each do |e|
-    message += "#{e.number_of_classes} this week. They are #{e.lectures}."
-    return message
+  e=schedule[0]
+  message += "#{e.number_of_classes} this week. They are #{e.lectures}."
+  
   end
 end
 

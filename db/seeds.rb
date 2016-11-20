@@ -11,7 +11,7 @@ PersonalDetail.create!([{qualification:"Product Design Intern",category:"Job",in
 this_week = Time.new(2016,11,14,00,00)
 
 Schedule.create!([{week:this_week,number_of_classes:7,lectures:"Design for Environment,Programming,Visual Processes,User research",number_of_assignments:5,assignments:"Programming, Visual Processes"}])
-Schedule.create!([{week:this_week-7.days,number_of_classes:7,lectures:"Design for Environment,Programming,Visual Processes,User research,Career Planning",number_of_assignments:6,assignments:"Design for Environment, Programming, Visual Processes"}])
+Schedule.create!([{week:this_week-7.days,number_of_classes:8,lectures:"Design for Environment,Programming,Visual Processes,User research,Career Planning",number_of_assignments:6,assignments:"Design for Environment, Programming, Visual Processes"}])
 Schedule.create!([{week:this_week-14.days,number_of_classes:6,lectures:"Design for Environment,Programming,Visual Processes,User research",number_of_assignments:3,assignments:"Programming, Visual Processes"}])
 Schedule.create!([{week:this_week-21.days,number_of_classes:7,lectures:"Design for Environment,Programming,Visual Processes,User research,Career Planning",number_of_assignments:4,assignments:"Design for Environment, Programming, Visual Processes"}])
-Schedule.create!([{week:this_week-28.days,number_of_classes:7,lectures:"Design for Environment,Programming,Visual Processes,User research,Career Planning",number_of_assignments:4,assignments:"Programming, Visual Processes, User Research"}])
+Schedule.create!([{week:this_week-28.days,number_of_classes:5,lectures:"Design for Environment,Programming,Visual Processes,User research,Career Planning",number_of_assignments:4,assignments:"Programming, Visual Processes, User Research"}])
