@@ -40,8 +40,8 @@ behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaika
 
 user=behance_profile["user"]
 
-$all_personal_details = PersonalDetail.all
-$entire_schedule = Schedule.all
+all_personal_details = PersonalDetail.all
+entire_schedule = Schedule.all
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
 # ----------------------------------------------------------------------
@@ -68,23 +68,23 @@ get '/incoming_sms' do
 
   elsif body == "where has he studied"
     
-    message = where_studied
+    message = where_studied all_personal_details
 
   elsif body == "how many classes does he have this week"
 
-    message = classes_this_week
+    message = classes_this_week entire_schedule
 
   elsif body == "how many classes did he have last week"
 
-    message = classes_last_week
+    message = classes_last_week entire_schedule
 
   elsif body == "how many assignments does he have this week"
 
-    message = assignments_this_week
+    message = assignments_this_week entire_schedule
 
   elsif body == "how many assignments did he have this week"
 
-    message = assignments_last_week  
+    message = assignments_last_week entire_schedule  
 
   elsif body == "show me advait's portfolio"
 
@@ -146,18 +146,16 @@ get '/personal-details/:id' do
   PersonalDetail.where(id: params['id']).first.to_json
 end
 
-define_method behance_profile
-  {
-    link = user["url"]
-    message="Here's a link to his behance profile: #{link}"
-    return message
-  }
+def behance_profile 
+  link = user["url"]
+  message="Here's a link to his behance profile: #{link}"
+  return message
+end
 
-define_method where_studied
-  {
-    message="He has done his "
+def where_studied details
+  message="He has done his "
 
-    all_personal_details.each do |t|
+    details.each do |t|
 
       if t["category"] == "Education"
         message += t.qualification + 'at' + t.institution  
@@ -166,41 +164,41 @@ define_method where_studied
     end
 
   return message
-  }
+end
 
-define_method classes_this_week
+def classes_this_week schedule
   message="He has "
 
-  entire_schedule.each do |e|
-    message += "#{e.number_of_classes} this week. They are #{lectures}."
+  schedule.each do |e|
+    message += "#{e.number_of_classes} this week. They are #{e.lectures}."
     return message
   end
 end
 
-define_method classes_last_week
+def classes_last_week
   message="He had "
 
   entire_schedule.each do |e|
-    message += "#{e.number_of_classes} this week. They are #{lectures}."
+    message += "#{e.number_of_classes} this week. They are #{e.lectures}."
   end
 end
 
-define_method assignments_this_week
+def assignments_this_week schedule
 
   message="He has "
 
-  e=entire_schedule[0]
-  message += "#{e.number_of_assignments} this week. They are #{assignments}."
+  e=schedule[0]
+  message += "#{e.number_of_assignments} this week. They are #{e.assignments}."
   return message
 
 end
 
-define_method assignments_last_week
+def assignments_last_week
 
   message="He had "
 
-  e=entire_schedule[1]
-  message += "#{e.number_of_assignments} last week. They were #{assignments}."
+  e=schedule[1]
+  message += "#{e.number_of_assignments} last week. They were #{e.assignments}."
   return message
   
 end
