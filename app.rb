@@ -55,6 +55,7 @@ get '/incoming_sms' do
   sender = params[:From]
   body = params[:Body]
   body = body.downcase
+  message=""
   media=nil
 
   if body == "where is advait"
@@ -73,8 +74,15 @@ get '/incoming_sms' do
     #   message += p["qualification"] + 'at' + p["institution"]
     # end
 
-    message = PersonalDetail.all.to_json
-    # details.to_json
+    # message = PersonalDetail.all.to_json
+    
+    PersonalDetail.all.to_json do |t|
+
+      if t["category"] == "Education"
+        message += t.qualification + 'at' + t.institution  
+      end
+      
+    end
 
   elsif body == "how many classes does he have this week"
 
