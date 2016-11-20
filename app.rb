@@ -75,8 +75,6 @@ get '/incoming_sms' do
 
     all_personal_details
 
-    end
-
   elsif body == "how many classes does he have this week"
 
     message = classes_this_week
