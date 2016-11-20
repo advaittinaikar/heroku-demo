@@ -70,7 +70,7 @@ get '/incoming_sms' do
     
     message = where_studied all_personal_details
 
-  elsif body.include? "work"
+  elsif body.include? "worked"
 
     message = where_worked all_personal details
 
@@ -94,9 +94,9 @@ get '/incoming_sms' do
 
     message = "It is available on behance. His username is #{user["username"]}."
 
-  elsif body == "show me his behance profile details"
+  elsif body == "behance"
 
-    message = behance_profile
+    message = behance_profile user
     media = user["images"]["138"]
 
   else
@@ -133,7 +133,7 @@ end
 
 def behance_profile user
 
-  link = user.url
+  link = user["url"]
   message="Here's a link to his behance profile: #{link}"
   return message
 
@@ -145,7 +145,23 @@ def where_studied details
     details.each do |t|
 
       if t["category"] == "Education"
-        message += "#{t.qualification} at #{t.institution} </br>"
+        message += "#{t.qualification} at #{t.institution}
+        "
+      end
+      
+    end
+
+  return message
+end
+
+def where_worked details
+  message="He has worked "
+
+    details.each do |t|
+
+      if t["category"] == "Job"
+        message += "as a #{t.qualification} at #{t.institution}
+        "
       end
       
     end
