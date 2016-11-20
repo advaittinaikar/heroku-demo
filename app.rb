@@ -40,8 +40,8 @@ behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaika
 
 user=behance_profile["user"]
 
-all_personal_details = PersonalDetail.all
-entire_schedule = Schedule.all
+$all_personal_details = PersonalDetail.all
+$entire_schedule = Schedule.all
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
 # ----------------------------------------------------------------------
@@ -67,18 +67,8 @@ get '/incoming_sms' do
     message = "It's damn cold there!"
 
   elsif body == "where has he studied"
-
-    message="He has done his "
-
-    all_personal_details.each do |t|
-
-      if t["category"] == "Education"
-        message += t.qualification + 'at' + t.institution  
-      end
-      
-    end
     
-    # message = where_studied
+    message = where_studied
 
   elsif body == "how many classes does he have this week"
 
@@ -165,13 +155,13 @@ end
 def where_studied
   message="He has done his "
 
-  all_personal_details.each do |t|
+    all_personal_details.each do |t|
 
       if t["category"] == "Education"
         message += t.qualification + 'at' + t.institution  
       end
       
-  end
+    end
 
   return message
 end
