@@ -67,7 +67,7 @@ get '/incoming_sms' do
 
   elsif body == "where has he studied"
 
-    all_personal_details.each do |p|
+    all_personal_details do |p|
 
     if p["category"] == "Education"
       message += p["qualification"] + 'at' + p["institution"]
