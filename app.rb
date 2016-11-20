@@ -73,8 +73,8 @@ get '/incoming_sms' do
     #   message += p["qualification"] + 'at' + p["institution"]
     # end
 
-    details = PersonalDetail.all
-    details.to_json
+    message = PersonalDetail.all.to_json
+    # details.to_json
 
   elsif body == "how many classes does he have this week"
 
@@ -153,7 +153,7 @@ get '/personal-details/:id' do
 end
 
 def behance_profile
-  link = $user["url"]
+  link = user["url"]
   message="Here's a link to his behance profile: #{link}"
   return message
 end
