@@ -92,7 +92,8 @@ get '/incoming_sms' do
 
   elsif body.include? "portfolio"
 
-    message = "It is available on behance at the following link: " + behance_profile user
+    link = behance_profile user
+    message = "It is available on behance at the following link: " + link
     media = user["images"]["138"]
 
   else
