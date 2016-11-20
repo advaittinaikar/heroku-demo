@@ -146,13 +146,13 @@ get '/personal-details/:id' do
   PersonalDetail.where(id: params['id']).first.to_json
 end
 
-def behance_profile
+define_method behance_profile
   link = user["url"]
   message="Here's a link to his behance profile: #{link}"
   return message
 end
 
-def where_studied
+define_method where_studied
   message="He has done his "
 
     all_personal_details.each do |t|
@@ -166,7 +166,7 @@ def where_studied
   return message
 end
 
-def classes_this_week
+define_method classes_this_week
   message="He has "
 
   entire_schedule.each do |e|
@@ -175,7 +175,7 @@ def classes_this_week
   end
 end
 
-def classes_last_week
+define_method classes_last_week
   message="He had "
 
   entire_schedule.each do |e|
@@ -183,7 +183,7 @@ def classes_last_week
   end
 end
 
-def assignments_this_week
+define_method assignments_this_week
 
   message="He has "
 
@@ -193,7 +193,7 @@ def assignments_this_week
 
 end
 
-def assignments_last_week
+define_method assignments_last_week
 
   message="He had "
 
