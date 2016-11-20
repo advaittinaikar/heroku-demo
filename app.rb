@@ -70,7 +70,7 @@ get '/incoming_sms' do
     all_personal_details.each do |p|
 
     if p.category == "education"
-      message += p.qualification} + 'at' + p.institution
+      message += p.qualification + 'at' + p.institution
     end
 
     end
