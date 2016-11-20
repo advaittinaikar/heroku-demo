@@ -147,13 +147,15 @@ get '/personal-details/:id' do
 end
 
 define_method behance_profile
-  link = user["url"]
-  message="Here's a link to his behance profile: #{link}"
-  return message
-end
+  {
+    link = user["url"]
+    message="Here's a link to his behance profile: #{link}"
+    return message
+  }
 
 define_method where_studied
-  message="He has done his "
+  {
+    message="He has done his "
 
     all_personal_details.each do |t|
 
@@ -164,7 +166,7 @@ define_method where_studied
     end
 
   return message
-end
+  }
 
 define_method classes_this_week
   message="He has "
