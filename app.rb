@@ -158,7 +158,7 @@ def where_studied details
     details.each do |t|
 
       if t["category"] == "Education"
-        message += t.qualification + 'at' + t.institution  
+        message += "#{t.qualification} at #{t.institution} </br>"
       end
       
     end
@@ -175,12 +175,12 @@ def classes_this_week schedule
   end
 end
 
-def classes_last_week
+def classes_last_week schedule
   message="He had "
 
-  entire_schedule.each do |e|
-    message += "#{e.number_of_classes} this week. They are #{e.lectures}."
-  end
+  e=schedule[1]
+  message += "#{e.number_of_classes} this week. They are #{e.lectures}."
+  
 end
 
 def assignments_this_week schedule
@@ -296,7 +296,7 @@ end
 # ----------------------------------------------------------------------
 
 
-error 401 do 
+error 401 do
   "Why is this happening!!!"
 end
 
