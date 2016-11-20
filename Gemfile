@@ -9,7 +9,7 @@ gem 'sinatra-activerecord' # excellent gem that ports ActiveRecord for Sinatra
 gem 'haml'
 gem 'builder'
 gem 'twilio-ruby'
-gem 'behance'
+# gem 'behance'
 gem 'httparty'
 # to avoid installing postgres use 
 # bundle install --without production
