@@ -76,7 +76,7 @@ get '/incoming_sms' do
 
     # message = PersonalDetail.all.to_json
     
-    PersonalDetail.all.to_json do |t|
+    PersonalDetail.all.to_json.each do |t|
 
       if t["category"] == "Education"
         message += t.qualification + 'at' + t.institution  
