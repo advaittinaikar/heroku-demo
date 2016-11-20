@@ -40,7 +40,7 @@ behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaika
 
 user=behance_profile["user"]
 
-all_personal_details = PersonalDetail.all
+personal_details = PersonalDetail.all
 entire_schedule = Schedule.all
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
@@ -68,11 +68,11 @@ get '/incoming_sms' do
 
   elsif body.include? "studied"
     
-    message = where_studied all_personal_details
+    message = where_studied personal_details
 
   elsif body.include? "worked"
 
-    message = where_worked all_personal details
+    message = where_worked personal_details
 
   elsif body == "how many classes does he have this week"
 
@@ -92,11 +92,7 @@ get '/incoming_sms' do
 
   elsif body.include? "portfolio"
 
-    message = "It is available on behance. His username is #{user["username"]}."
-
-  elsif body == "behance"
-
-    message = behance_profile user
+    message = "It is available on behance at the following link: " + behance_profile user
     media = user["images"]["138"]
 
   else
@@ -128,6 +124,18 @@ end
 get '/personal-details/:id' do
 
   PersonalDetail.where(id: params['id']).first.to_json
+
+end
+
+get '/schedule', :provides => [:html, :json, :xml] do
+  
+  Schedule.all.to_json
+ 
+end
+ 
+get '/schedule/:id' do
+
+  Schedule.where(id: params['id']).first.to_json
 
 end
 
