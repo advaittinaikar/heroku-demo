@@ -73,7 +73,8 @@ get '/incoming_sms' do
     #   message += p["qualification"] + 'at' + p["institution"]
     # end
 
-    all_personal_details
+    p=PersonalDetail.all
+    p.to_json
 
   elsif body == "how many classes does he have this week"
 
