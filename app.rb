@@ -66,9 +66,13 @@ get '/incoming_sms' do
 
     message = "It's damn cold there!"
 
-  elsif body == "where has he studied"
+  elsif body.include? "studied"
     
     message = where_studied all_personal_details
+
+  elsif body.include? "work"
+
+    message = where_worked all_personal details
 
   elsif body == "how many classes does he have this week"
 
@@ -86,7 +90,7 @@ get '/incoming_sms' do
 
     message = assignments_last_week entire_schedule  
 
-  elsif body == "show me advait's portfolio"
+  elsif body.include? "portfolio"
 
     message = "It is available on behance. His username is #{user["username"]}."
 
@@ -117,39 +121,22 @@ end
 
 get '/personal-details', :provides => [:html, :json, :xml] do
   
-  #Task.all.to_json
-  personal = PersonalDetail.all
-  #
-  # respond_to do |f|
-  #   f.xml { @tasks.to_xml }
-  #   f.on( 'text/json' ) { @tasks.to_json }
-  #   f.on( 'text/html' ) { "wooops" }
-  #   f.on( 'application/json' ) { @tasks.to_json }
-  #   #f.on('*/*') {  Task.all.map{ |t| t.to_s }.to_s }
-  #   f.on('*/*') { haml :'tasks/index' }
-  # end
-
-  # respond_to do |f|
-  #     f.xml { @tasks.to_xml }
-  #     f.on( 'text/json' ) { @tasks.to_json }
-  #     #f.on( 'text/html' ) { "wooops" }
-  #     f.on( 'application/json' ) { @tasks.to_json }
-  #     #f.on('*/*') {  Task.all.map{ |t| t.to_s }.to_s }
-  #     f.on('*/*') { haml :'tasks/index' }
-  #
-  # end
+  PersonalDetail.all.to_json
  
-  personal.to_json
 end
  
 get '/personal-details/:id' do
+
   PersonalDetail.where(id: params['id']).first.to_json
+
 end
 
-def behance_profile 
-  link = user["url"]
+def behance_profile user
+
+  link = user.url
   message="Here's a link to his behance profile: #{link}"
   return message
+
 end
 
 def where_studied details
