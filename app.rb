@@ -88,7 +88,7 @@ get '/incoming_sms' do
 
   elsif body == "how many assignments did he have this week"
 
-    message = assignments_last_week entire_schedule  
+    message = assignments_last_week entire_schedule
 
   elsif body.include? "portfolio"
 
