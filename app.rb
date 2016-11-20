@@ -40,8 +40,8 @@ behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaika
 
 user=behance_profile["user"]
 
-all_personal_details = PersonalDetail.all.to_json
-entire_schedule = Schedule.all.to_json
+all_personal_details = PersonalDetail.all
+entire_schedule = Schedule.all
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
 # ----------------------------------------------------------------------
@@ -76,13 +76,7 @@ get '/incoming_sms' do
 
     # message = PersonalDetail.all.to_json
     
-    PersonalDetail.all.each do |t|
-
-      if t["category"] == "Education"
-        message += t.qualification + 'at' + t.institution  
-      end
-      
-    end
+    message = where_studied
 
   elsif body == "how many classes does he have this week"
 
@@ -169,12 +163,12 @@ end
 def where_studied
   message="He has done his "
 
-  all_personal_details do |detail|
+  all_personal_details.each do |t|
 
-    if detail.category == "education"
-      message += "#{detail.qualification} at #{detail.institution} and"
-    end
-
+      if t["category"] == "Education"
+        message += t.qualification + 'at' + t.institution  
+      end
+      
   end
 
   return message
@@ -183,7 +177,7 @@ end
 def classes_this_week
   message="He has "
 
-  entire_schedule do |e|
+  entire_schedule.each do |e|
     message += "#{e.number_of_classes} this week. They are #{lectures}."
     return message
   end
@@ -192,7 +186,7 @@ end
 def classes_last_week
   message="He had "
 
-  entire_schedule do |e|
+  entire_schedule.each do |e|
     message += "#{e.number_of_classes} this week. They are #{lectures}."
   end
 end
