@@ -68,15 +68,17 @@ get '/incoming_sms' do
 
   elsif body == "where has he studied"
 
-    # all_personal_details do |p|
+    message="He has done his "
 
-    # if p["category"] == "Education"
-    #   message += p["qualification"] + 'at' + p["institution"]
-    # end
+    all_personal_details.each do |t|
 
-    # message = PersonalDetail.all.to_json
+      if t["category"] == "Education"
+        message += t.qualification + 'at' + t.institution  
+      end
+      
+    end
     
-    message = where_studied
+    # message = where_studied
 
   elsif body == "how many classes does he have this week"
 
