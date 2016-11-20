@@ -145,8 +145,7 @@ def where_studied details
     details.each do |t|
 
       if t["category"] == "Education"
-        message += "#{t.qualification} at #{t.institution}
-        "
+        message += "#{t.qualification} at #{t.institution},"
       end
       
     end
@@ -160,8 +159,7 @@ def where_worked details
     details.each do |t|
 
       if t["category"] == "Job"
-        message += "as a #{t.qualification} at #{t.institution}
-        "
+        message += "as a #{t.qualification} at #{t.institution}"
       end
       
     end
