@@ -41,13 +41,13 @@ behance_projects = HTTParty.get("https://api.behance.net/v2/users/advait-tinaika
 $user=behance_profile["user"]
 
 all_personal_details = PersonalDetail.all.to_json
-entire_schedule=Schedule.all.to_json
+entire_schedule = Schedule.all.to_json
 # ----------------------------------------------------------------------
 #     ROUTES, END POINTS AND ACTIONS
 # ----------------------------------------------------------------------
 
 get '/' do
-  "This application has been made by #{user["first_name"]}!"
+  "This application has been made by #{user["first_name"]} #{user["last_name"]}!"
 end
 
 get '/incoming_sms' do
@@ -73,8 +73,8 @@ get '/incoming_sms' do
     #   message += p["qualification"] + 'at' + p["institution"]
     # end
 
-    p=PersonalDetail.all
-    p.to_json
+    details = PersonalDetail.all
+    details.to_json
 
   elsif body == "how many classes does he have this week"
 
@@ -161,10 +161,10 @@ end
 def where_studied
   message="He has done his "
 
-  all_personal_details do |p|
+  all_personal_details do |detail|
 
-    if p.category == "education"
-      message += "#{p.qualification} at #{p.institution} and"
+    if detail.category == "education"
+      message += "#{detail.qualification} at #{detail.institution} and"
     end
 
   end
